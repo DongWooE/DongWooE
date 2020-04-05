@@ -22,24 +22,3 @@ void print1 (int *ptr, int rows){
         printf("%p \t %5d\n", ptr+i, (*ptr+i));  //ptr[i]의 주소(i가 늘수록 4bytes씩 증가)와 그 인덱스의 원소 출력, call by reference이므로 one의 주소와 원소 출력
     printf("\n");
 }
-
-padding
-#include <stdio.h>
-#include <stdlib.h>
-
-struct student {  //구조체 student 선언
-    char lastName[13];  //구조체 멤버변수로 char형 13개의 인덱스를 가진 lastName배열 선언 (1(char형)*13(13개의 인덱스)이므로 13bytes)
-    int studentID;  //구조체 멤버변수로 int형 studentID 선언 (int형이므로 4byte)
-    short grade;  //구조체 멤버변수로 short형 grade 선언 (short형이므로 2byte)
-};
-
-int main(){
-    struct student pst;  //구조체 변수로 pst선언
-
-    printf("-----[이동우]-----[2017038069]-----\n");
-    printf("size of student = %ld\n", sizeof(struct student));  //구조체 student의 크기 출력( 컴파일러에 따라 다르다 padding 허용이면 24byte, padding 허용이 안되면 값이 깨짐)
-    printf("size of int = %ld\n", sizeof(int));  //int형의 크기 출력 -4bytes
-    printf("size of short = %ld\n", sizeof(short));  //short형의 크기 출력 -2bytes
-
-    return 0;
-}
