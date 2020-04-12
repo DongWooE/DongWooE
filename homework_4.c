@@ -107,7 +107,7 @@ int** create_matrix(int row, int col){  //행과 열을 인수로 받아 2차원
 }
 int free_matrix(int**matrix,int row, int col){  //인수로 받은 더블 포인터를 동적할당 해제해주는 함수)
 	int result=0;  //리턴을 위해 result 선언 후 0으로 초기화
-	for(int i=0; i< col; i++)  //먼저 2차원 배열의 세로부분의 공간을  해제
+	for(int i=0; i< row; i++)  //먼저 2차원 배열의 세로부분의 공간을  해제
 		free(matrix[i]);
 
 	free(matrix);  //전체 매트릭스 공간을 해제
@@ -130,7 +130,7 @@ void print_matrix(int**matrix, int row, int col){  //2차원 배열을 가리키
 	printf("\n===출력합니다===\n");
 	for(int a=0;a<row;a++){
 		for(int b=0;b<col;b++){
-			printf(" %2d ", matrix[a][b]);  //해당 원소를 2개의 칸에서 오른쪽 정렬하여 출력
+			printf(" %3d ", matrix[a][b]);  //해당 원소를 3개의 칸에서 오른쪽 정렬하여 출력
 		}
 		printf("\n");
 	}	printf("\n");
