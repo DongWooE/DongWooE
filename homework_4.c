@@ -65,7 +65,7 @@ int main(void) {
 	func_return(addition_matrix(pt_A,pt_B,pt_add,row,col));  //pt_A와 pt_B의 2차원 배열을 더한 값을 pt_add에 대입
 	print_matrix(pt_add,row,col);  //pt_add 출력
 	printf("동적할당한 덧셈행렬을 공간할당해제합니다\n ");
-	free_matrix(pt_add, row, col);  //뒤에서 더 쓸 일이 없으므로 pt_add가 가리키는 공간을 해제
+	func_return(free_matrix(pt_add, row, col));  //뒤에서 더 쓸 일이 없으므로 pt_add가 가리키는 공간을 해제
 	printf("\n");
 
 	printf("행렬 A-B\n");
@@ -73,7 +73,7 @@ int main(void) {
 	func_return(subtraction_matrix(pt_A,pt_B,pt_sub,row,col));  //pt_A와 pt_B의 2차원 배열을 뺀 값을 pt_sub에 대입
 	print_matrix(pt_sub,row,col);  //pt_sub 출력
 	printf("동적할당한 뺄셈행렬을 공간할당해제합니다\n ");
-	free_matrix(pt_sub, row, col);  //pt_sub가 가리키는 공간을 해제
+	func_return(free_matrix(pt_sub, row, col));  //pt_sub가 가리키는 공간을 해제
 	printf("\n");
 
 	printf("A의 전치행렬\n");
@@ -89,10 +89,10 @@ int main(void) {
 	printf("\n");
 
 	printf("동적할당한 행렬 A,B,전치,곱셈 의 공간할당해제합니다\n");
-	free_matrix(pt_mul, row, row);  //pt_mul 가리키는 공간을 해제
-	free_matrix(pt_A, row, col);  //pt_A 가리키는 공간을 해제
-	free_matrix(pt_B,row,col);  //pt_B 가리키는 공간을 해제
-	free_matrix(pt_tran, col,row );  //pt_tran 가리키는 공간을 해제
+	func_return(free_matrix(pt_mul, row, row));  //pt_mul 가리키는 공간을 해제
+	func_return(free_matrix(pt_A, row, col));  //pt_A 가리키는 공간을 해제
+	func_return(free_matrix(pt_B,row,col));  //pt_B 가리키는 공간을 해제
+	func_return(free_matrix(pt_tran, col,row ));  //pt_tran 가리키는 공간을 해제
 
 }
 
@@ -106,17 +106,18 @@ int** create_matrix(int row, int col){  //행과 열을 인수로 받아 2차원
 	return p;  //2차원 배열을 가리키는 포인터 p 반환
 }
 int free_matrix(int**matrix,int row, int col){  //인수로 받은 더블 포인터를 동적할당 해제해주는 함수)
-	int result=0;  //리턴을 위해 result 선언 후 0으로 초기화
+	int result=1;  //리턴을 위해 result 선언 후 1로 초기화
+	int compare=**matrix;  //free 후처리를 위해 선언 후 **matrix의 값 대입
 	for(int i=0; i< row; i++)  //먼저 2차원 배열의 세로부분의 공간을  해제
 		free(matrix[i]);
 
 	free(matrix);  //전체 매트릭스 공간을 해제
-	if(matrix==NULL)  //matrix가 null값을 가리킨다면
-		result=-1;  //result 값을 -1로
-	return result;  //result 리턴
+	if(**matrix==compare)  //포인터가 정상 동적할당해제되었으면 할당 전의 **matrix값과 달라야함
+		result=-1;
+	return result;
 }
 int fill_data(int **matrix, int row, int col){  //2차원 배열을 가리키는 포인터로 각각의 원소에 접근하여 0~19까지의 값을 대입
-	int result=0;  //리턴을 위해 result 선언 후 0으로 초기화
+	int result=1;  //리턴을 위해 result 선언 후 1로 초기화
 	for(int a=0; a<row;a++){
 		for(int b=0;b<col;b++)
 			matrix[a][b]=rand()%20;  //해당 원소에 rand()함수를 사용해 0~19까지의 무작위 수 대입
@@ -136,7 +137,7 @@ void print_matrix(int**matrix, int row, int col){  //2차원 배열을 가리키
 	}	printf("\n");
 }
 int addition_matrix(int**matrix_a, int**matrix_b, int**matrix_sum, int row, int col){  //2개의 2차원 배열의 각각의 원소를 더해서 새로운 2차원 배열에 대입하는 함수
-int result=0;  //반환값을 위해 선언 후 0으로 초기화
+int result=1;  //반환값을 위해 선언 후 1로 초기화
 	for(int a=0; a<row; a++){
 		for(int b=0;b<col;b++){
 			matrix_sum[a][b]=matrix_a[a][b]+matrix_b[a][b];  //matrix_a의 원소와 matrix_b의 원소를 더한 값을 matrix_sum의 해당 자리에 대입
@@ -147,7 +148,7 @@ int result=0;  //반환값을 위해 선언 후 0으로 초기화
 	return result;  //result 리턴}
 }
 int subtraction_matrix(int **matrix_a, int **matrix_b, int **matrix_sub, int row, int col){  //2개의 2차원 배열의 각각의 원소를 빼서 새로운 2차원 배열에 대입하는 함수
-int result=0;  //반환값을 위해 선언 후 0으로 초기화
+int result=1;  //반환값을 위해 선언 후 1로 초기화
 for(int a=0; a<row; a++){
 	for(int b=0;b<col;b++){
 		matrix_sub[a][b]=matrix_a[a][b]-matrix_b[a][b];  //matrix_a의 원소와 matrix_b의 원소를 뺀 값을 matrix_sub의 해당 자리에 대입
@@ -158,7 +159,7 @@ if(matrix_sub==NULL)  //matrix_sub가 null값을 가리킨다면
 	return result;  //result 리턴
 }
 int transpose_matrix(int **matrix, int **matrix_t, int row, int col){  //2차원 배열 한 개를 전치시켜주는 함수
-int result=0;  //반환값을 위해 선언 후 0으로 초기화
+int result=1;  //반환값을 위해 선언 후 1로 초기화
 	for(int a=0; a< col; a++)
 		for(int b=0; b<row; b++)
 			matrix_t[a][b]=matrix[b][a];  //각각의 원소의 자릿수를 서로 바꾸어 matrix_t에 대입
@@ -168,7 +169,7 @@ int result=0;  //반환값을 위해 선언 후 0으로 초기화
 		return result;  //result 리턴
 }
 int multiply_matrix(int**matrix_a, int **matrix_t, int **matrix_axt, int row, int col){  //2개의 2차원 배열을 서로 곱해주는 함수
-int result=0; //반환값을 위해 선언 후 0으로 초기화
+int result=1; //반환값을 위해 선언 후 1로 초기화
 	for(int i=0;i<row;i++){
 		for(int j=0;j<row;j++){
 			int sum=0;  //연산값을 잠시 저장해주는 sum 선언 후 초기화
