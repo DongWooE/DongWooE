@@ -1,9 +1,9 @@
 #made by 이동우
 import pygame
 
-class map:
+class map: #copyright 이동우
     def __init__(self, screen):
-        self.img = pygame.image.load("img/grass.png") #맵 블록 이미지 파일
+        self.img = pygame.image.load("image/virus/mapicon1.png") #맵 블록 이미지 파일
         self.first = [0,0] #map의 초기좌표
         self.last = [0,0] #map의 마지막 좌표
         self.pos = [0,0]
@@ -13,11 +13,12 @@ class map:
         self.y = self.img.get_height()
         self.screen = screen
 
-    def set(self,first,last):
+    def set(self,first,last): #copyright 이동우
         self.first = first
         self.last = last
 
-    def draw(self):
+    def draw(self): #copyright 이동우
+        self.chIndex =0
         for list in self.ch:
             if self.chIndex == 0:
                 self.pos = self.first
